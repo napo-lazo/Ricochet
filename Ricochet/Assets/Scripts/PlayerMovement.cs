@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(move.normalized * speed * Time.deltaTime);
 
         if (isGrounded && controls.Player.Jump.WasPressedThisFrame())
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
