@@ -1,2 +1,2 @@
 # Ricochet
-A PoC for a FPS game inspired on LoL's champion Sivir. 
+A PoC for a FPS game inspired by LoL's champion Sivir. 
