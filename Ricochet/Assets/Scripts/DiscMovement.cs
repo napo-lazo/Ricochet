@@ -28,6 +28,7 @@ public class DiscMovement : MonoBehaviour
         if (timePassed > secondsFlying)
         {
             rb.useGravity = true;
+            rb.constraints = RigidbodyConstraints.FreezeRotationY;
         }
     }
 
@@ -48,6 +49,7 @@ public class DiscMovement : MonoBehaviour
             }
 
             rb.velocity = Vector3.zero;
+            transform.rotation = Quaternion.LookRotation(bounce.normalized, transform.transform.up);
             rb.AddForce(bounce, ForceMode.Force);
         }
     }

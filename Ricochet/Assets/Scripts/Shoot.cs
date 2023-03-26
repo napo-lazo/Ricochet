@@ -9,6 +9,9 @@ public class Shoot : MonoBehaviour
     
     public Transform disc;
     public Transform discCheck;
+    public Transform playerCamera;
+    [Range(1, 90)]
+    public int discAngleRange = 10;
 
     private void Awake()
     {
@@ -28,13 +31,22 @@ public class Shoot : MonoBehaviour
             Destroy(hit.collider.gameObject);
             canShoot = true;
         }
-            
+
         if (controls.Player.Shoot.WasPressedThisFrame() && canShoot)
         {
-            Vector3 spawnPoint = transform.position;
+            Vector3 spawnPoint = playerCamera.position;
+            Quaternion discRotation = playerCamera.rotation;
+
             spawnPoint += transform.forward * 2f;
 
-            Instantiate(disc, spawnPoint, transform.rotation);
+            float xAngle = playerCamera.rotation.eulerAngles.x;
+            float zAngle = 0f;
+            if (xAngle > discAngleRange + 0 && xAngle < 360 - discAngleRange)
+                zAngle = 90f;
+
+            discRotation = Quaternion.Euler(discRotation.eulerAngles.x, discRotation.eulerAngles.y, zAngle);
+
+            Instantiate(disc, spawnPoint, discRotation);
             canShoot = false;
         }
     }
