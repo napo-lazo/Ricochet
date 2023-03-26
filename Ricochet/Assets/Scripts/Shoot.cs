@@ -46,7 +46,8 @@ public class Shoot : MonoBehaviour
 
             discRotation = Quaternion.Euler(discRotation.eulerAngles.x, discRotation.eulerAngles.y, zAngle);
 
-            Instantiate(disc, spawnPoint, discRotation);
+            Transform discInstance = Instantiate(disc, spawnPoint, discRotation);
+            discInstance.GetComponent<DiscMovement>().setPlayer(transform);
             canShoot = false;
         }
     }

@@ -62,6 +62,15 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CallBackDisc"",
+                    ""type"": ""Button"",
+                    ""id"": ""db70b609-3c78-48b9-a6f2-f48c9255e459"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,17 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de2a52f7-51d3-4233-8730-5e706c2ce34b"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""CallBackDisc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -170,6 +190,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
+        m_Player_CallBackDisc = m_Player.FindAction("CallBackDisc", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -235,6 +256,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Shoot;
+    private readonly InputAction m_Player_CallBackDisc;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -243,6 +265,7 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
+        public InputAction @CallBackDisc => m_Wrapper.m_Player_CallBackDisc;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -264,6 +287,9 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
+            @CallBackDisc.started += instance.OnCallBackDisc;
+            @CallBackDisc.performed += instance.OnCallBackDisc;
+            @CallBackDisc.canceled += instance.OnCallBackDisc;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -280,6 +306,9 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
+            @CallBackDisc.started -= instance.OnCallBackDisc;
+            @CallBackDisc.performed -= instance.OnCallBackDisc;
+            @CallBackDisc.canceled -= instance.OnCallBackDisc;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -312,5 +341,6 @@ public partial class @InputMaster: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnCallBackDisc(InputAction.CallbackContext context);
     }
 }
